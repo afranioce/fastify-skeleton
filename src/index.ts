@@ -1,2 +1,5 @@
-export * from './lib/async';
-export * from './lib/number';
+import { create, start } from "./service";
+
+const service = create();
+
+start(service);
