@@ -30,13 +30,16 @@ FROM mhart/alpine-node:slim-12 as production
 
 WORKDIR /app
 
-# COPY --from=builder /build ./build
+# COPY --from=builder ./build ./build
+# COPY --from=builder ./node_modules ./node_modules
 
 EXPOSE 4444
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
 FROM base as development
+
+RUN yarn global add nodemon
 
 COPY . .
 
@@ -45,6 +48,9 @@ RUN yarn install
 
 EXPOSE 4444
 
-CMD ["yarn", "run", "watch:build"]
+ADD docker/node/watch-changes.sh /
+RUN chmod +x /watch-changes.sh
+
+ENTRYPOINT ["/watch-changes.sh"]
 
 FROM production

@@ -5,6 +5,6 @@ import { create, start } from './server';
 
 dotenv.config();
 
-const server = create();
+const server = create({logger: true});
 
 start(server);

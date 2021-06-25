@@ -8,7 +8,6 @@ services:
       target: development
       args:
         - NPM_TOKEN=${NPM_TOKEN}
-    entrypoint: node build/main/index.js
     ports:
       - 4444:4444
     volumes:
