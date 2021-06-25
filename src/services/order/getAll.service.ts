@@ -5,6 +5,6 @@ import { ServiceInterface } from "../../lib/service";
 @Service()
 export class GetAllService implements ServiceInterface {
   async handler(_request: FastifyRequest, reply: FastifyReply): Promise<void> {
-    reply.send({'teste': 'adasdasd'});
+    reply.send([{"id": 123456}]);
   }
 }

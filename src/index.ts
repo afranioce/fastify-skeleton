@@ -1,5 +1,9 @@
-import { create, start } from "./service";
+import 'reflect-metadata';
+import * as dotenv from "dotenv";
+import { create, start } from "./server";
 
-const service = create();
+dotenv.config();
 
-start(service);
+const server = create();
+
+start(server);
