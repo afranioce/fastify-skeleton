@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  npm:
+    image: 'fastify-skeleton:latest'
+    init: true
+    entrypoint: yarn
+    volumes:
+      - .:/app
+      - yarn_cache:/root/.yarn
+
+volumes:
+  yarn_cache:

@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  app:
+    image: 'fastify-skeleton:latest'
+    build:
+      context: .
+      dockerfile: docker/node/Dockerfile
+      target: development
+      args:
+        - NPM_TOKEN=${NPM_TOKEN}
+    ports:
+      - 4444:4444
+    volumes:
+      - .:/app
+      - /app/node_modules
