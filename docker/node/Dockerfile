@@ -23,13 +23,14 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn run build
+# TODO /bin/sh: run-p: not found solve error Command failed with exit code 127.
+# RUN yarn run build
 
 FROM mhart/alpine-node:slim-12 as production
 
 WORKDIR /app
 
-COPY --from=builder /build ./build
+# COPY --from=builder /build ./build
 
 EXPOSE 4444
 

@@ -1,6 +1,7 @@
 import 'reflect-metadata';
-import * as dotenv from "dotenv";
-import { create, start } from "./server";
+import dotenv from 'dotenv';
+
+import { create, start } from './server';
 
 dotenv.config();
 

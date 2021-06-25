@@ -1,12 +1,13 @@
-import fastify, { FastifyInstance, FastifyServerOptions } from "fastify"
-import fastifyAutoload from "fastify-autoload";
-import path from "path";
+import path from 'path';
+
+import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
+import fastifyAutoload from 'fastify-autoload';
 
 export function create(opts: FastifyServerOptions = {}): FastifyInstance {
   const server: FastifyInstance = fastify({});
 
   server.register(fastifyAutoload, {
-    dir: path.join(__dirname, "routes"),
+    dir: path.join(__dirname, 'routes'),
     options: opts,
   });
 
@@ -16,7 +17,7 @@ export function create(opts: FastifyServerOptions = {}): FastifyInstance {
 export async function start(server: FastifyInstance) {
   await server.ready();
 
-  return await new Promise<FastifyInstance>(resolve => {
+  return await new Promise<FastifyInstance>((resolve) => {
     server.listen(
       { port: parseInt(process.env.PORT!), host: process.env.HOST },
       (err: Error, address: string): void => {
@@ -26,6 +27,7 @@ export async function start(server: FastifyInstance) {
         }
 
         resolve(server);
-      })
+      }
+    );
   });
 }

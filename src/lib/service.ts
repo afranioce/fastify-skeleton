@@ -1,5 +1,5 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest } from 'fastify';
 
-export interface ServiceInterface {
+export type ServiceInterface = {
   handler(request: FastifyRequest, reply: FastifyReply): void | Promise<void>;
-}
+};
