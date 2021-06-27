@@ -48,9 +48,9 @@ RUN yarn install
 
 EXPOSE 4444
 
-ADD docker/node/watch-changes.sh /
-RUN chmod +x /watch-changes.sh
+ADD docker/node/entrypoint.sh /
+RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/watch-changes.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 FROM production
