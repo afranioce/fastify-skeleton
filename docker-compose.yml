@@ -8,8 +8,8 @@ services:
       target: development
       args:
         - NPM_TOKEN=${NPM_TOKEN}
+    entrypoint: "yarn run watch"
     ports:
       - 4444:4444
     volumes:
       - .:/app
-      - /app/node_modules

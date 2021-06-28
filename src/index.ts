@@ -1,9 +1,8 @@
-import 'reflect-metadata';
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 
 import { create, start } from './server';
 
-dotenv.config();
+config();
 
 const server = create({ logger: true });
 

@@ -39,18 +39,11 @@ ENTRYPOINT ["/sbin/tini", "--"]
 
 FROM base as development
 
-RUN yarn global add nodemon
-
 COPY . .
 
 ENV NODE_ENV=development
 RUN yarn install
 
 EXPOSE 4444
-
-ADD docker/node/entrypoint.sh /
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
 
 FROM production
