@@ -4,7 +4,7 @@ import { GET, RequestHandler } from 'fastify-decorators';
   url: '/orders',
 })
 export default class ListHandler extends RequestHandler {
-  async handle() {
+  async handle(): Promise<unknown> {
     return { msg: 'A example' };
   }
 }

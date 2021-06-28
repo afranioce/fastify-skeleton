@@ -4,7 +4,7 @@ import { GET, RequestHandler } from 'fastify-decorators';
   url: '/_healthcheck',
 })
 export default class HealthcheckHandler extends RequestHandler {
-  async handle() {
+  async handle(): Promise<void> {
     this.reply.send('OK');
   }
 }

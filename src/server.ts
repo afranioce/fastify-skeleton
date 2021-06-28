@@ -14,7 +14,7 @@ export function create(opts: FastifyServerOptions = {}): FastifyInstance {
   return server;
 }
 
-export async function start(server: FastifyInstance) {
+export async function start(server: FastifyInstance): Promise<FastifyInstance> {
   await server.ready();
 
   return await new Promise<FastifyInstance>((resolve) => {
