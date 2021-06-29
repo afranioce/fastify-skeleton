@@ -1,11 +1,6 @@
 import { config } from 'dotenv';
 
-/**
- * @TODO improve lazy configuration loading
- */
-if (process.env.NODE_ENV === undefined) {
-  config();
-}
+config();
 
 interface EnvConfig {
   nodeEnv: string,
