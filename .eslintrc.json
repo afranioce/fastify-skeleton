@@ -18,6 +18,7 @@
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/explicit-function-return-type": ["error"],
     "@typescript-eslint/explicit-member-accessibility": ["error"],
+    "@typescript-eslint/naming-convention": ["error"],
     "eslint-comments/disable-enable-pair": [
       "error",
       { "allowWholeFile": true }
