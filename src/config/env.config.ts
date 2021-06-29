@@ -3,10 +3,10 @@ import { config } from 'dotenv';
 config();
 
 interface EnvConfig {
-  nodeEnv: string,
-  appEnv: string,
-  appHost: string,
-  appPort: number,
+  readonly nodeEnv: string;
+  readonly appEnv: string;
+  readonly appHost: string;
+  readonly appPort: number;
 }
 
 const envConfig: EnvConfig = {
