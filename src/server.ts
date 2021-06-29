@@ -3,6 +3,8 @@ import { resolve } from 'path';
 import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
 import { bootstrap } from 'fastify-decorators';
 
+import envConfig from './config/env.config';
+
 export function create(opts: FastifyServerOptions = {}): FastifyInstance {
   const server: FastifyInstance = fastify(opts);
 
@@ -19,11 +21,15 @@ export async function start(server: FastifyInstance): Promise<FastifyInstance> {
 
   return await new Promise<FastifyInstance>((resolve) => {
     server.listen(
-      { port: parseInt(process.env.PORT as string), host: process.env.HOST },
+      {
+        host: envConfig.appHost,
+        port: envConfig.appPort,
+      },
       (err: Error, address: string): void => {
         if (err) {
-          server.log.fatal({ msg: `Application startup error`, err, address });
-          process.exit(1);
+          server.log.fatal({ msg: 'Application startup error', err, address });
+
+          process.exit(2);
         }
 
         resolve(server);
