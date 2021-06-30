@@ -1,4 +1,5 @@
 import { config } from 'dotenv';
+import { LogLevel } from 'fastify';
 
 config();
 
@@ -7,6 +8,7 @@ interface EnvConfig {
   readonly appEnv: string;
   readonly appHost: string;
   readonly appPort: number;
+  readonly logLevel: LogLevel;
 }
 
 const envConfig: EnvConfig = {
@@ -14,6 +16,7 @@ const envConfig: EnvConfig = {
   appEnv: <string>process.env.ENVIRONMENT,
   appHost: <string>process.env.HOST,
   appPort: parseInt(<string>process.env.PORT),
+  logLevel: <LogLevel>process.env.LOG_LEVEL || 'info',
 };
 
 export default envConfig;
