@@ -9,12 +9,14 @@ RUN apk add --no-cache \
   make=4.2.1-r2 \
   g++=8.3.0-r0
 
-ARG NPM_TOKEN
+ARG GITLAB_TOKEN
+ARG GITLAB_PROJECT_ID
+ARG GITLAB_HOST
+ARG SCOPE_REGISTRY
 
-# TODO implement this using yarn
-# RUN	npm config set "@falabella-gitlab:registry=https://gitlab.com/api/v4/packages/npm/" && \
-#   npm config set "//gitlab.com/api/v4/packages/npm/:_authToken=$NPM_TOKEN" && \
-#   npm config set "//gitlab.com/api/v4/projects/23294368/packages/npm/:_authToken=$NPM_TOKEN"
+RUN yarn config set "@${SCOPE_REGISTRY}:registry" "//${GITLAB_HOST}/api/v4/packages/npm/" && \
+  yarn config set -- "//${GITLAB_HOST}/api/v4/projects/${GITLAB_PROJECT_ID}/packages/npm/:_authToken" "${GITLAB_TOKEN}" && \
+  yarn config set -- "//${GITLAB_HOST}/api/v4/packages/npm/:_authToken" "${GITLAB_TOKEN}"
 
 FROM base AS builder
 
