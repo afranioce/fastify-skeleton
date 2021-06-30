@@ -36,8 +36,6 @@ WORKDIR /app
 COPY --from=builder /app/build ./build
 COPY --from=builder /app/node_modules ./node_modules
 
-RUN ls -al ./node_modules
-
 EXPOSE 4444
 
 ENTRYPOINT ["/sbin/tini", "--"]
