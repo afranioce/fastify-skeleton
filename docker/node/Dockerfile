@@ -20,20 +20,23 @@ RUN yarn config set "@${SCOPE_REGISTRY}:registry" "//${GITLAB_HOST}/api/v4/packa
 
 FROM base AS builder
 
-ENV NODE_ENV=production
 RUN yarn install
 
 COPY . .
 
-# TODO /bin/sh: run-p: not found solve error Command failed with exit code 127.
-# RUN yarn run build
+RUN yarn run build
+
+# Clean packages after build
+RUN rm -rf ./node_modules && yarn install --prod && yarn autoclean --force
 
 FROM mhart/alpine-node:slim-12 as production
 
 WORKDIR /app
 
-# COPY --from=builder ./build ./build
-# COPY --from=builder ./node_modules ./node_modules
+COPY --from=builder /app/build ./build
+COPY --from=builder /app/node_modules ./node_modules
+
+RUN ls -al ./node_modules
 
 EXPOSE 4444
 
@@ -43,7 +46,6 @@ FROM base as development
 
 COPY . .
 
-ENV NODE_ENV=development
 RUN yarn install
 
 EXPOSE 4444
