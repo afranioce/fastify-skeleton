@@ -26,19 +26,24 @@ COPY . .
 
 RUN yarn run build
 
-# Clean packages after build
-RUN rm -rf ./node_modules && yarn install --prod && yarn autoclean --force
+RUN rm -rf node_modules && yarn install --prod --pure-lockfile && yarn autoclean --force
 
 FROM mhart/alpine-node:slim-12 as production
 
+RUN apk add --no-cache tini
+
 WORKDIR /app
 
-COPY --from=builder /app/build ./build
+COPY --from=builder /app/build/main ./
+COPY --from=builder /app/package.json /app/yarn.lock ./
 COPY --from=builder /app/node_modules ./node_modules
+COPY .env ./
 
 EXPOSE 4444
 
 ENTRYPOINT ["/sbin/tini", "--"]
+
+CMD ["node", "./index.js"]
 
 FROM base as development
 

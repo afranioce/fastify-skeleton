@@ -2,3 +2,7 @@
 .gitlab-ci.yml
 node_modules
 README.md
+build
+.nyc_output
+docker
+.env.dist

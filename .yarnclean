@@ -5,13 +5,13 @@ images
 assets
 example
 examples
+test
 
 *.yaml
 *.yml
 *.md
 *.markdown
 *.txt
-*.d.ts
 *.js.map
 *.ts.map
 license
@@ -19,7 +19,4 @@ LICENSE
 .eslintrc*
 .*ignore
 .editorconfig
-yarn.lock
-package.json
-package-lock.json
 tslint.json
