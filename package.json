@@ -10,8 +10,10 @@
   "keywords": [],
   "scripts": {
     "build": "run-p build:*",
-    "build:main": "tsc -p tsconfig.json",
-    "build:module": "tsc -p tsconfig.module.json",
+    "build:main": "run-s clean:main && tsc -p tsconfig.json",
+    "build:module": "run-s clean:module && tsc -p tsconfig.module.json",
+    "clean:main": "rm -rf build/main",
+    "clean:module": "rm -rf build/module",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
