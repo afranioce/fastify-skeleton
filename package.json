@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A simple api skeleton for fastify",
   "main": "build/main/index.js",
-  "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
   "repository": "https://github.com/afranioce/fastify-skeleton",
   "license": "UNLICENSED",
@@ -20,14 +19,14 @@
     "test": "run-s build test:*",
     "test:lint": "eslint src --ext .ts",
     "test:prettier": "prettier \"src/**/*.ts\" --list-different",
-    "test:unit": "nyc --silent ava",
+    "test:unit": "ENVIRONMENT=test LOG_LEVEL=info nyc --silent ava",
     "check-cli": "run-s test diff-integration-tests check-integration-tests",
     "check-integration-tests": "run-s check-integration-test:*",
     "diff-integration-tests": "mkdir -p diff && rm -rf diff/test && cp -r test diff/test && rm -rf diff/test/test-*/.git && cd diff && git init --quiet && git add -A && git commit --quiet --no-verify --allow-empty -m 'WIP' && echo '\\n\\nCommitted most recent integration test output in the \"diff\" directory. Review the changes with \"cd diff && git diff HEAD\" or your preferred git diff viewer.'",
     "watch": "nodemon -e ts -w ./src -x yarn run watch:serve",
     "watch:serve": "ts-node src/index.ts",
     "watch:build": "tsc -p tsconfig.json -w",
-    "watch:test": "nyc --silent ava --watch",
+    "watch:test": "ENVIRONMENT=test LOG_LEVEL=info nyc --silent ava --watch",
     "cov": "run-s build test:unit cov:html cov:lcov && open-cli coverage/index.html",
     "cov:html": "nyc report --reporter=html",
     "cov:lcov": "nyc report --reporter=lcov",
@@ -85,14 +84,8 @@
   "ava": {
     "failFast": true,
     "timeout": "60s",
-    "typescript": {
-      "rewritePaths": {
-        "src/": "build/main/"
-      }
-    },
-    "files": [
-      "!build/module/**"
-    ]
+    "extensions": ["ts"],
+		"require": ["ts-node/register"]
   },
   "husky": {
     "hooks": {
