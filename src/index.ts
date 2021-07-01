@@ -1,15 +1,24 @@
-import { create, start } from './server';
-import envConfig from './config/env.config';
-import pino from 'pino';
 import { resolve } from 'path';
 
-const server = create({
+import { FastifyServerOptions } from 'fastify';
+import pino from 'pino';
+
+import envConfig from './config/env.config';
+import Server from './server';
+
+const opts: FastifyServerOptions = {
   logger: pino(
     {
-      level: envConfig.logLevel
+      level: envConfig.logLevel,
     },
     pino.destination(resolve(__dirname, `var/log/${envConfig.appEnv}.log`))
-  )
-});
+  ),
+};
 
-start(server);
+const server = new Server(opts);
+
+server.addHandlers();
+
+server.start();
+
+export default server;

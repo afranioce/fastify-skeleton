@@ -1,39 +1,37 @@
 import { resolve } from 'path';
 
-import fastify, { FastifyInstance, FastifyServerOptions } from 'fastify';
+import fastify, { FastifyError, FastifyInstance, FastifyServerOptions } from 'fastify';
 import { bootstrap } from 'fastify-decorators';
 
 import envConfig from './config/env.config';
 
-export function create(opts: FastifyServerOptions = {}): FastifyInstance {
-  const server: FastifyInstance = fastify(opts);
+export default class Server {
+  public readonly fastify: FastifyInstance;
 
-  server.register(bootstrap, {
-    directory: resolve(__dirname, 'handlers'),
-    mask: /\.handler\./,
-  });
+  public constructor(private opts: FastifyServerOptions = {}) {
+    this.fastify = fastify(this.opts);
+  }
 
-  return server;
-}
+  public addHandlers(): void {
+    this.fastify.register(bootstrap, {
+      directory: resolve(__dirname, 'handlers'),
+      mask: /\.handler\./,
+    });
+  }
 
-export async function start(server: FastifyInstance): Promise<FastifyInstance> {
-  await server.ready();
+  public async start(): Promise<void> {
+    await this.fastify.ready();
 
-  return await new Promise<FastifyInstance>((resolve) => {
-    server.listen(
-      {
-        host: envConfig.appHost,
-        port: envConfig.appPort,
-      },
-      (err: Error, address: string): void => {
-        if (err) {
-          server.log.fatal({ msg: 'Application startup error', err, address });
+    const opts = {
+      host: envConfig.appHost,
+      port: envConfig.appPort,
+    };
 
-          process.exit(2);
-        }
+    this.fastify.listen(opts).catch(this.handlerError);
+  }
 
-        resolve(server);
-      }
-    );
-  });
+  private handlerError(err: FastifyError): void {
+    this.fastify.log.fatal({ msg: 'Application startup error', err });
+    process.exit(1);
+  }
 }

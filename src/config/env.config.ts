@@ -3,9 +3,11 @@ import { LogLevel } from 'fastify';
 
 config();
 
-interface EnvConfig {
+type AppEnviroment = 'dev' | 'prod' | 'test';
+
+export interface EnvConfig {
   readonly nodeEnv: string;
-  readonly appEnv: string;
+  readonly appEnv: AppEnviroment;
   readonly appHost: string;
   readonly appPort: number;
   readonly logLevel: LogLevel;
@@ -13,7 +15,7 @@ interface EnvConfig {
 
 const envConfig: EnvConfig = {
   nodeEnv: <string>process.env.NODE_ENV,
-  appEnv: <string>process.env.ENVIRONMENT,
+  appEnv: <AppEnviroment>process.env.ENVIRONMENT,
   appHost: <string>process.env.HOST,
   appPort: parseInt(<string>process.env.PORT),
   logLevel: <LogLevel>process.env.LOG_LEVEL || 'info',
