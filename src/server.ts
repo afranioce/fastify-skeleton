@@ -2,21 +2,35 @@ import { resolve } from 'path';
 
 import fastify, { FastifyError, FastifyInstance, FastifyServerOptions } from 'fastify';
 import { bootstrap } from 'fastify-decorators';
+import pino from 'pino';
 
 import envConfig from './config/env.config';
 
 export default class Server {
   public readonly fastify: FastifyInstance;
 
-  public constructor(private opts: FastifyServerOptions = {}) {
-    this.fastify = fastify(this.opts);
+  public constructor(options?: FastifyServerOptions) {
+    if (!options) {
+      options = {
+        logger: pino(
+          {
+            level: envConfig.logLevel,
+          },
+          pino.destination(resolve(__dirname, `var/log/${envConfig.appEnv}.log`))
+        ),
+      };
+    }
+
+    this.fastify = fastify(options);
   }
 
-  public addHandlers(): void {
+  public addHandlers(): Server {
     this.fastify.register(bootstrap, {
       directory: resolve(__dirname, 'handlers'),
       mask: /\.handler\./,
     });
+
+    return this;
   }
 
   public async start(): Promise<void> {

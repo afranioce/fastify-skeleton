@@ -38,9 +38,9 @@
 
     "lib": ["ES2019"],
     "types": ["node"],
-    "typeRoots": ["src/types"]
+    "typeRoots": ["src/types"],
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules/**"],
-  "compileOnSave": false
+  "compileOnSave": false,
 }
