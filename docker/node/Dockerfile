@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
+RUN mkdir -p /var/log/app
+
 RUN apk add --no-cache \
   python=2.7.18-r0 \
   make=4.2.1-r2 \
@@ -34,10 +36,11 @@ RUN apk add --no-cache tini
 
 WORKDIR /app
 
+RUN mkdir -p /var/log/app
+
 COPY --from=builder /app/build/main ./
 COPY --from=builder /app/package.json /app/yarn.lock ./
 COPY --from=builder /app/node_modules ./node_modules
-COPY .env ./
 
 EXPOSE 4444
 

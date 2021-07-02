@@ -7,21 +7,20 @@ import pino from 'pino';
 import envConfig from './config/env.config';
 
 export default class Server {
+  private static readonly LOG_FILE: string = `/var/log/app/${envConfig.appEnv}.log`;
+
   public readonly fastify: FastifyInstance;
+  private readonly defaultOptions: FastifyServerOptions = {
+    logger: pino(
+      {
+        level: envConfig.logLevel,
+      },
+      pino.destination(Server.LOG_FILE)
+    )
+  };
 
-  public constructor(options?: FastifyServerOptions) {
-    if (!options) {
-      options = {
-        logger: pino(
-          {
-            level: envConfig.logLevel,
-          },
-          pino.destination(resolve(__dirname, `var/log/${envConfig.appEnv}.log`))
-        ),
-      };
-    }
-
-    this.fastify = fastify(options);
+  public constructor(options: FastifyServerOptions = {}) {
+    this.fastify = fastify({ ...this.defaultOptions, ...options });
   }
 
   public addHandlers(): Server {
