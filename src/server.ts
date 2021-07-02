@@ -3,6 +3,7 @@ import { resolve } from 'path';
 import fastify, { FastifyError, FastifyInstance, FastifyServerOptions } from 'fastify';
 import { bootstrap } from 'fastify-decorators';
 import pino from 'pino';
+import { v4 as uuid } from 'uuid';
 
 import envConfig from './config/env.config';
 
@@ -11,6 +12,7 @@ export default class Server {
 
   public readonly fastify: FastifyInstance;
   private readonly defaultOptions: FastifyServerOptions = {
+    genReqId: () => uuid(),
     logger: pino(
       {
         level: envConfig.logLevel,

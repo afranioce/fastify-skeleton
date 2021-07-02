@@ -44,12 +44,14 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "fastify": "^3.18.0",
-    "fastify-decorators": "^3.10.0"
+    "fastify-decorators": "^3.10.0",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/node": "^15.12.5",
     "@types/pino": "^6.3.8",
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
     "ava": "^3.12.1",
@@ -83,9 +85,15 @@
   "ava": {
     "failFast": true,
     "timeout": "60s",
-    "files": ["tests/**/*.spec.*"],
-    "extensions": ["ts"],
-    "require": ["ts-node/register"],
+    "files": [
+      "tests/**/*.spec.*"
+    ],
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
     "verbose": true,
     "environmentVariables": {
       "ENVIRONMENT": "test",
