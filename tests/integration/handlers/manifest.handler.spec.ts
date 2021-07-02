@@ -1,4 +1,4 @@
-import test from '../../../helper/test-integration';
+import test from '../../helpers/integration';
 
 test('API Testing manifest', async (t) => {
   await t.context.fastify
