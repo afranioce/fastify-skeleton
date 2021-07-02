@@ -11,6 +11,7 @@ export default class Server {
   private static readonly LOG_FILE: string = `/var/log/app/${envConfig.appEnv}.log`;
 
   public readonly fastify: FastifyInstance;
+
   private readonly defaultOptions: FastifyServerOptions = {
     genReqId: () => uuid(),
     logger: pino(
@@ -18,7 +19,7 @@ export default class Server {
         level: envConfig.logLevel,
       },
       pino.destination(Server.LOG_FILE)
-    )
+    ),
   };
 
   public constructor(options: FastifyServerOptions = {}) {
