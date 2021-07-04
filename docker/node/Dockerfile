@@ -13,12 +13,14 @@ RUN apk add --no-cache \
 
 ARG GITLAB_TOKEN
 ARG GITLAB_PROJECT_ID
-ARG GITLAB_HOST
-ARG SCOPE_REGISTRY
+ARG GITLAB_HOST=gitlab.com
+ARG SCOPE_REGISTRY=gitlab
 
-RUN yarn config set "@${SCOPE_REGISTRY}:registry" "//${GITLAB_HOST}/api/v4/packages/npm/" && \
-  yarn config set -- "//${GITLAB_HOST}/api/v4/projects/${GITLAB_PROJECT_ID}/packages/npm/:_authToken" "${GITLAB_TOKEN}" && \
-  yarn config set -- "//${GITLAB_HOST}/api/v4/packages/npm/:_authToken" "${GITLAB_TOKEN}"
+RUN test -n "${GITLAB_TOKEN}" && \
+  yarn config set "@${SCOPE_REGISTRY}:registry" "//${GITLAB_HOST}/api/v4/packages/npm/" && \
+  yarn config set -- "//${GITLAB_HOST}/api/v4/packages/npm/:_authToken" "${GITLAB_TOKEN}" && \
+  test -n "${GITLAB_PROJECT_ID}" && \
+  yarn config set -- "//${GITLAB_HOST}/api/v4/projects/${GITLAB_PROJECT_ID}/packages/npm/:_authToken" "${GITLAB_TOKEN}" || true
 
 FROM base AS builder
 
@@ -32,7 +34,7 @@ RUN rm -rf node_modules && yarn install --prod --pure-lockfile && yarn autoclean
 
 FROM mhart/alpine-node:slim-12 as production
 
-RUN apk add --no-cache tini
+RUN apk add --no-cache tini=0.18.0-r0
 
 WORKDIR /app
 

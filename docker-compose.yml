@@ -9,7 +9,6 @@ services:
       args:
         - GITLAB_TOKEN=${GITLAB_TOKEN}
         - GITLAB_PROJECT_ID=23294368
-        - GITLAB_HOST=gitlab.com
         - SCOPE_REGISTRY=falabella-gitlab
     entrypoint: "yarn run watch"
     ports:
