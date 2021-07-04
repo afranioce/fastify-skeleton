@@ -5,14 +5,3 @@ services:
     build:
       context: .
       dockerfile: docker/node/Dockerfile
-      target: production
-      args:
-        - GITLAB_TOKEN=${GITLAB_TOKEN}
-        - GITLAB_PROJECT_ID=23294368
-        - SCOPE_REGISTRY=falabella-gitlab
-    # entrypoint: "yarn run watch"
-    ports:
-      - 4444:4444
-    # volumes:
-      # - .:/app
-      # - ./.logs:/var/log/app:rw

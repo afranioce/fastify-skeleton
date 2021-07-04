@@ -5,3 +5,4 @@ src/**.js
 coverage
 *.log
 .env
+docker-compose.override.yml
