@@ -36,13 +36,17 @@ FROM mhart/alpine-node:slim-12 as production
 
 RUN apk add --no-cache tini=0.18.0-r0
 
-WORKDIR /app
+RUN addgroup -S node && adduser -S -G node node
 
-RUN mkdir -p /var/log/app
+RUN mkdir -p /var/log/app && chown -R node:node /var/log/app
+
+WORKDIR /app
 
 COPY --from=builder /app/build/main ./
 COPY --from=builder /app/package.json /app/yarn.lock ./
 COPY --from=builder /app/node_modules ./node_modules
+
+USER node
 
 EXPOSE 4444
 

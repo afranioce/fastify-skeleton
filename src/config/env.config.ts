@@ -25,10 +25,10 @@ export interface EnvConfig {
 }
 
 const envConfig: EnvConfig = {
-  nodeEnv: <string>process.env.NODE_ENV,
-  appEnv: <AppEnvType>process.env.ENVIRONMENT,
-  appHost: <string>process.env.HOST,
-  appPort: parseInt(<string>process.env.PORT),
+  nodeEnv: <string>process.env.NODE_ENV || NodeEnv.Production,
+  appEnv: <AppEnvType>process.env.ENVIRONMENT || AppEnv.Prod,
+  appHost: <string>process.env.HOST || '0.0.0.0',
+  appPort: parseInt(<string>process.env.PORT) || 4444,
   logLevel: <LogLevel>process.env.LOG_LEVEL || 'info',
 };
 
