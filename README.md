@@ -1,6 +1,6 @@
 # Fastify API skeleton
 
-A simple api skeleton using fastify with TypeScript Support, for Node.js
+A simple api skeleton using fastify with TypeScript Support, for Node.js.
 
 ## Core features
 
@@ -12,6 +12,7 @@ A simple api skeleton using fastify with TypeScript Support, for Node.js
 
 ## Pre-requisites
 
+- git
 - docker
 - docker-compose
 
@@ -26,6 +27,22 @@ For this reason, it is recommended to create an alias for `docker-compose -f doc
 > add a new line into your shell `alias dcli='docker-compose -f docker-compose.cli.yml run --rm'`
 
 > Ps.: [Oh My Zsh](https://ohmyz.sh) is a powerfull shell framework which features major extensions such as plug-ins and themes for `zsh` (recomended)
+
+## [Recommended] Enable Git hooks
+
+It goes to help you to improve your commits and reviews ([PR](https://docs.github.com/en/github/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)/[MR](https://docs.gitlab.com/ee/user/project/merge_requests/)) like coding standards, unit tests and more.
+
+Install [nodejs](https://nodejs.org/en/download/) >= 10:
+
+```
+curl -sL install-node.now.sh/lts | bash
+```
+
+Install husky:
+
+```
+npx husky install
+```
 
 ## Quick start
 
@@ -59,7 +76,7 @@ Finally, you can test it with:
 curl http://127.0.0.1:4444
 ```
 
-### [Optional] Setup gitlab token
+## [Optional] Setup gitlab token
 
 The first step is to make a gitlab token with following permissions:
 
@@ -68,7 +85,7 @@ The first step is to make a gitlab token with following permissions:
 3. Assign the permissions.
 4. Click on `Create personal access token`.
 
-Second step is to save gitlab token into `.bashrc` or `.env` (see the [instalation](#installation) section):
+Second step is to save gitlab token into `.bashrc` or `.env` (see the [Quick Start](#quick-start) section):
 
 ```bash
 nano ~/.bashrc
@@ -86,7 +103,7 @@ finally reload bashrc
 source ~/.bashrc
 ```
 
-> If you have installed the [zsh](https://www.zsh.org/), save your token into `.zshrc`
+> If you have installed the [zsh](https://www.zsh.org/), save your token into `.zshrc`.
 
 ## Tests
 

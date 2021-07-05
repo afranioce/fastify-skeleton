@@ -24,13 +24,15 @@ RUN test -n "${GITLAB_TOKEN}" && \
 
 FROM base AS builder
 
-RUN yarn install
+RUN NODE_ENV=development yarn install
 
 COPY . .
 
 RUN yarn run build
 
-RUN rm -rf node_modules && yarn install --prod --pure-lockfile && yarn autoclean --force
+RUN rm -rf node_modules && \
+  NODE_ENV=production yarn install --prod --pure-lockfile --ignore-scripts && \
+  yarn autoclean --force
 
 FROM mhart/alpine-node:slim-12 as production
 
@@ -48,6 +50,8 @@ COPY --from=builder /app/node_modules ./node_modules
 
 USER node
 
+ENV NODE_ENV=production
+
 EXPOSE 4444
 
 ENTRYPOINT ["/sbin/tini", "--"]
@@ -57,6 +61,8 @@ CMD ["node", "./index.js"]
 FROM base as development
 
 COPY . .
+
+ENV NODE_ENV=development
 
 RUN yarn install
 

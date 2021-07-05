@@ -103,7 +103,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn run fix"
+      "pre-commit": "docker-compose -f docker-compose.cli.yml run --rm yarn run fix"
     }
   },
   "config": {
