@@ -1,10 +1,9 @@
-import 'reflect-metadata';
-import dotenv from 'dotenv';
+import Server from './server';
 
-import { create, start } from './server';
+const server = new Server();
 
-dotenv.config();
+server.addHandlers();
 
-const server = create({ logger: true });
+server.start();
 
-start(server);
+export default server;

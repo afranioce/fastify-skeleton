@@ -1,8 +1,8 @@
 build
 node_modules
-test
 .nyc_output
 src/**.js
 coverage
 *.log
 .env
+docker-compose.override.yml

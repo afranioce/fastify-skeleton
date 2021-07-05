@@ -4,53 +4,68 @@ WORKDIR /app
 
 COPY package.json yarn.lock ./
 
+RUN mkdir -p /var/log/app
+
 RUN apk add --no-cache \
   python=2.7.18-r0 \
   make=4.2.1-r2 \
   g++=8.3.0-r0
 
-ARG NPM_TOKEN
+ARG GITLAB_TOKEN
+ARG GITLAB_PROJECT_ID
+ARG GITLAB_HOST=gitlab.com
+ARG SCOPE_REGISTRY=gitlab
 
-# TODO implement this using yarn
-# RUN	npm config set "@falabella-gitlab:registry=https://gitlab.com/api/v4/packages/npm/" && \
-#   npm config set "//gitlab.com/api/v4/packages/npm/:_authToken=$NPM_TOKEN" && \
-#   npm config set "//gitlab.com/api/v4/projects/23294368/packages/npm/:_authToken=$NPM_TOKEN"
+RUN test -n "${GITLAB_TOKEN}" && \
+  yarn config set "@${SCOPE_REGISTRY}:registry" "//${GITLAB_HOST}/api/v4/packages/npm/" && \
+  yarn config set -- "//${GITLAB_HOST}/api/v4/packages/npm/:_authToken" "${GITLAB_TOKEN}" && \
+  test -n "${GITLAB_PROJECT_ID}" && \
+  yarn config set -- "//${GITLAB_HOST}/api/v4/projects/${GITLAB_PROJECT_ID}/packages/npm/:_authToken" "${GITLAB_TOKEN}" || true
 
 FROM base AS builder
 
-ENV NODE_ENV=production
-RUN yarn install
+RUN NODE_ENV=development yarn install
 
 COPY . .
 
-# TODO /bin/sh: run-p: not found solve error Command failed with exit code 127.
-# RUN yarn run build
+RUN yarn run build
+
+RUN rm -rf node_modules && \
+  NODE_ENV=production yarn install --prod --pure-lockfile --ignore-scripts && \
+  yarn autoclean --force
 
 FROM mhart/alpine-node:slim-12 as production
 
+RUN apk add --no-cache tini=0.18.0-r0
+
+RUN addgroup -S node && adduser -S -G node node
+
+RUN mkdir -p /var/log/app && chown -R node:node /var/log/app
+
 WORKDIR /app
 
-# COPY --from=builder ./build ./build
-# COPY --from=builder ./node_modules ./node_modules
+COPY --from=builder /app/build/main ./
+COPY --from=builder /app/package.json /app/yarn.lock ./
+COPY --from=builder /app/node_modules ./node_modules
+
+USER node
+
+ENV NODE_ENV=production
 
 EXPOSE 4444
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
-FROM base as development
+CMD ["node", "./index.js"]
 
-RUN yarn global add nodemon
+FROM base as development
 
 COPY . .
 
 ENV NODE_ENV=development
+
 RUN yarn install
 
 EXPOSE 4444
-
-ADD docker/node/entrypoint.sh /
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
 
 FROM production

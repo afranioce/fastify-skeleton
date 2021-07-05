@@ -15,7 +15,30 @@
   ],
   "globals": { "BigInt": true, "console": true, "WebAssembly": true },
   "rules": {
+    "lines-between-class-members": "off",
+    "newline-before-return": "off",
+    "newline-before-var": "off",
+    "padding-line-between-statements": [
+      "error",
+      // override rule newline-before-return
+      { "blankLine": "always", "prev": "*", "next": "return" },
+      // override rule newline-before-var
+      { "blankLine": "always", "prev": ["const", "let"], "next": "*"},
+      { "blankLine": "any", "prev": ["const", "let"], "next": ["const", "let"]}
+    ],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/explicit-function-return-type": ["error"],
+    "@typescript-eslint/explicit-member-accessibility": ["error"],
+    "@typescript-eslint/naming-convention": [
+      "error",
+      { "selector": "default", "format": ["camelCase"] },
+      { "selector": "typeLike", "format": ["PascalCase"] },
+      { "selector": "enumMember", "format": ["PascalCase"] },
+      { "selector": "memberLike", "modifiers": ["static"], "format": ["UPPER_CASE"] }
+    ],
+    "@typescript-eslint/lines-between-class-members": ["error"],
     "eslint-comments/disable-enable-pair": [
       "error",
       { "allowWholeFile": true }

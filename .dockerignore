@@ -1,4 +1,9 @@
-.git
+.git/
+node_modules/
+build/
+docker/
+.logs/
 .gitlab-ci.yml
-node_modules
 README.md
+.nyc_output
+.env.dist
