@@ -118,3 +118,29 @@ Lint files:
 ```bash
 dcli yarn run fix
 ```
+
+## Command Cli
+
+List commands:
+
+```bash
+dcli yarn run cli
+```
+
+Command help:
+
+```bash
+dcli yarn run cli example -h
+```
+
+To register a command, change `src/command.ts`:
+
+```
+import NewExampleCommand from 'src/commands/new-example.command';
+
+program.addCommand(getInstanceByToken<NewExampleCommand>(NewExampleCommand));
+```
+
+See the to more examples https://github.com/tj/commander.js
+
+> [Fastify-decorator](https://github.com/L2jLiga/fastify-decorators) has support to Dependency injection (DI), [click here](https://github.com/L2jLiga/fastify-decorators/blob/v3/docs/Services%20and%20dependency%20injection.md) to see more exampĺes
