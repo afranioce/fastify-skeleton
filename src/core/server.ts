@@ -5,7 +5,7 @@ import { bootstrap } from 'fastify-decorators';
 import pino from 'pino';
 import { v4 as uuid } from 'uuid';
 
-import envConfig from './config/env.config';
+import envConfig from '../config/env.config';
 
 export default class Server {
   private static readonly LOG_FILE: string = `/var/log/app/${envConfig.appEnv}.log`;

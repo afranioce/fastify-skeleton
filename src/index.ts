@@ -1,9 +1,7 @@
-import Server from './server';
+import Server from './core/server';
 
 const server = new Server();
 
 server.addHandlers();
 
 server.start();
-
-export default server;

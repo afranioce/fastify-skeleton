@@ -1,6 +1,6 @@
 import anyTest, { TestInterface } from 'ava';
 import { FastifyInstance } from 'fastify';
-import Server from '../../src/server';
+import Server from '../../src/core/server';
 
 interface TestContext {
   fastify: FastifyInstance;
