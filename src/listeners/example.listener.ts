@@ -1,10 +1,9 @@
 import EventEmitter from 'events';
 
 import { Service } from 'typedi';
-import { EventListener } from '../core/event-manager';
 
 @Service()
-export default class ExampleListener implements EventListener {
+export default class ExampleListener {
   public constructor(emitter: EventEmitter) {
     emitter.on('added', this.onAdd);
     emitter.on('deleted', this.onDelete);

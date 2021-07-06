@@ -10,10 +10,6 @@ declare type EventDefault = {
   [k: string]: (...args: any[]) => any;
 };
 
-export interface EventListener {
-
-}
-
 @Service({ global: true })
 export default class EventManager {
   public constructor(private emitter: EventEmitter) {
