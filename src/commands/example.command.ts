@@ -1,7 +1,7 @@
 import { Argument } from 'commander';
-import { Service } from 'fastify-decorators';
+import { Service } from 'typedi';
 
-import { Command } from '../core/command';
+import Command from '../core/command';
 
 @Service()
 export default class ExampleCommand extends Command {

@@ -1,27 +1,28 @@
-import { Command as Base } from "commander";
+import { Command as Base } from 'commander';
+import { Token } from 'typedi';
 
-export abstract class Command extends Base {
-  protected get defaultName() : string {
+export const commandToken = new Token('commands');
+
+export default abstract class Command extends Base {
+  protected get defaultName(): string {
     return '';
   }
 
   protected get defaultDescription(): string {
     return '';
-  };
+  }
 
-  constructor() {
+  public constructor() {
     super();
 
-    this
-      .name(this.defaultName)
-      .description(this.defaultDescription);
+    this.name(this.defaultName).description(this.defaultDescription);
 
     this.configure();
 
-    this.action((...args: any[]) => this.execute(args));
+    this.action((...args: unknown[]) => this.execute(args));
   }
 
   protected abstract configure(): void;
 
-  protected abstract execute(...args: any[]): void;
+  protected abstract execute(...args: unknown[]): void;
 }

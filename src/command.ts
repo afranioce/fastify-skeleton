@@ -1,11 +1,14 @@
+import './config/services.config';
+
 import { Command } from 'commander';
-import { getInstanceByToken } from 'fastify-decorators';
+import Container from 'typedi';
 
 import ExampleCommand from './commands/example.command';
 
 const program = new Command();
 
-//TODO register commands automatically
-program.addCommand(getInstanceByToken<ExampleCommand>(ExampleCommand));
+const commands: Command[] = [Container.get(ExampleCommand)];
+
+commands.map((command) => program.addCommand(command));
 
 program.parseAsync();

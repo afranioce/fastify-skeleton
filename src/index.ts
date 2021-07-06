@@ -1,3 +1,5 @@
+import './config/services.config';
+
 import Server from './core/server';
 
 const server = new Server();
