@@ -6,7 +6,7 @@ services:
       args:
         - GITLAB_TOKEN=${GITLAB_TOKEN}
         # - GITLAB_PROJECT_ID=GITLAB_PROJECT_ID
-        # - SCOPE_REGISTRY=YOU_SCOPE # see https://docs.npmjs.com/cli/v6/using-npm/scope
+        # - SCOPE_REGISTRY=YOUR_SCOPE # see https://docs.npmjs.com/cli/v6/using-npm/scope
     entrypoint: "yarn run watch"
     ports:
       - 4444:4444

@@ -119,18 +119,18 @@ Lint files:
 dcli yarn run fix
 ```
 
-## Command Cli
+## Console Commands
 
 List commands:
 
 ```bash
-dcli yarn run cli
+dcli yarn run dev:cli
 ```
 
 Command help:
 
 ```bash
-dcli yarn run cli example -h
+dcli yarn run dev:cli example -h
 ```
 
 To register a command, change `src/command.ts`:
@@ -138,7 +138,10 @@ To register a command, change `src/command.ts`:
 ```
 import NewExampleCommand from 'src/commands/new-example.command';
 
-program.addCommand(getInstanceByToken<NewExampleCommand>(NewExampleCommand));
+const commands: Command = [
+  // ...
+  Container.get(NewExampleCommand),
+]
 ```
 
 See the to more examples https://github.com/tj/commander.js
