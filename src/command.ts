@@ -1,13 +1,12 @@
-import './config/services.config';
+import './config/commands.config';
 
 import { Command } from 'commander';
 import Container from 'typedi';
 
-import ExampleCommand from './commands/example.command';
+import { commandToken } from './core/command';
 
 const program = new Command();
-
-const commands: Command[] = [Container.get(ExampleCommand)];
+const commands = Container.getMany(commandToken);
 
 commands.map((command) => program.addCommand(command));
 

@@ -133,15 +133,16 @@ Command help:
 dcli yarn run dev:cli example -h
 ```
 
-To register a command, change `src/command.ts`:
+To register a command, change `src/config/commands.config.ts`:
 
 ```
-import NewExampleCommand from 'src/commands/new-example.command';
+import NewExampleCommand from '../commands/new-example.command';
 
-const commands: Command = [
+Container.import([
   // ...
-  Container.get(NewExampleCommand),
-]
+  NewExampleCommand,
+]);
+
 ```
 
 See the to more examples https://github.com/tj/commander.js

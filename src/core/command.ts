@@ -1,7 +1,7 @@
 import { Command as Base } from 'commander';
 import { Token } from 'typedi';
 
-export const commandToken = new Token('commands');
+export const commandToken = new Token<Base>('commands');
 
 export default abstract class Command extends Base {
   protected get defaultName(): string {
