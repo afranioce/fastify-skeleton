@@ -1,8 +1,8 @@
 import { Argument } from 'commander';
 import { Service } from 'typedi';
 
-import Command, { commandToken } from '../core/command';
-import EventManager from '../core/event-manager';
+import Command, { commandToken } from '../../core/command';
+import EventManager from '../../core/event-manager';
 import ExampleEvent from '../events/example.event';
 
 @Service({ id: commandToken, multiple: true })

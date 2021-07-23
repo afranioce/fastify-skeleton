@@ -28,7 +28,7 @@ export default class Server {
 
   public addHandlers(): Server {
     this.fastify.register(bootstrap, {
-      directory: resolve(__dirname, '../handlers'),
+      directory: resolve(__dirname, '../app/handlers'),
       mask: /\.handler\./,
     });
 
