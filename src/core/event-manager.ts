@@ -11,7 +11,7 @@ declare type EventDefault = {
 };
 
 @Service({ global: true })
-export default class EventManager {
+export class EventManager {
   public constructor(private emitter: EventEmitter) {
     Container.getMany('event.lintener');
   }

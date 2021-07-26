@@ -3,7 +3,7 @@ import { Token } from 'typedi';
 
 export const commandToken = new Token<Base>('commands');
 
-export default abstract class Command extends Base {
+export abstract class Command extends Base {
   protected get defaultName(): string {
     return '';
   }

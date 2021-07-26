@@ -7,7 +7,7 @@ import { v4 as uuid } from 'uuid';
 
 import envConfig from '../config/env.config';
 
-export default class Server {
+export class Server {
   private static readonly LOG_FILE: string = `/var/log/app/${envConfig.appEnv}.log`;
 
   public readonly fastify: FastifyInstance;

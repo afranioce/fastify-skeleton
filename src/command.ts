@@ -3,7 +3,7 @@ import './config/commands.config';
 import { Command } from 'commander';
 import Container from 'typedi';
 
-import { commandToken } from './core/command';
+import { commandToken } from './core';
 
 const program = new Command();
 const commands = Container.getMany(commandToken);
